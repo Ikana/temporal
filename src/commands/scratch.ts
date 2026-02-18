@@ -27,7 +27,7 @@ function scratchAdd(args: string[]): void {
   const label = parsed.values.scratch;
   const context = loadScratchContext(label);
   if (hasEventName(context, eventName)) {
-    commandError(`Error: Event "${eventName}" already exists in the scratch pad.`);
+    commandError(`Error: Event '${eventName}' already exists in the scratch pad.`);
   }
 
   const now = new Date(context.now.timestamp);

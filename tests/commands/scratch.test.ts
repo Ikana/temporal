@@ -1,5 +1,6 @@
 import { describe, expect, test } from "bun:test";
 import { existsSync, readFileSync, rmSync, writeFileSync } from "node:fs";
+import { scratchFilePath } from "../../src/lib/scratch";
 import { runCli, withTempDir } from "../helpers/cli";
 
 function rmFile(path: string): void {
@@ -10,23 +11,9 @@ function label(name: string): string {
   return `${name}-${process.pid}-${Date.now()}`;
 }
 
-function scratchPath(rawLabel?: string): string {
-  if (!rawLabel) {
-    return "/tmp/time-scratch.md";
-  }
-
-  const sanitized = rawLabel
-    .toLowerCase()
-    .replace(/[^a-z0-9]+/g, "-")
-    .replace(/-+/g, "-")
-    .replace(/^-|-$/g, "");
-
-  return `/tmp/time-scratch-${sanitized}.md`;
-}
-
 describe("temporal scratch", () => {
   test("scratch creates default pad", () => {
-    const path = scratchPath();
+    const path = scratchFilePath();
     rmFile(path);
 
     withTempDir((dir) => {
@@ -42,7 +29,7 @@ describe("temporal scratch", () => {
 
   test("scratch creates labeled pad", () => {
     const raw = label("scratch-labeled");
-    const path = scratchPath(raw);
+    const path = scratchFilePath(raw);
     rmFile(path);
 
     withTempDir((dir) => {
@@ -57,7 +44,7 @@ describe("temporal scratch", () => {
 
   test("scratch replaces existing pad content", () => {
     const raw = label("replace");
-    const path = scratchPath(raw);
+    const path = scratchFilePath(raw);
     rmFile(path);
 
     withTempDir((dir) => {
@@ -74,7 +61,7 @@ describe("temporal scratch", () => {
   });
 
   test("scratch does not modify project time.md", () => {
-    const path = scratchPath();
+    const path = scratchFilePath();
     rmFile(path);
 
     withTempDir((dir) => {
@@ -93,7 +80,7 @@ describe("temporal scratch", () => {
 
   test("scratch add supports --in", () => {
     const raw = label("add-in");
-    const path = scratchPath(raw);
+    const path = scratchFilePath(raw);
     rmFile(path);
 
     withTempDir((dir) => {
@@ -110,7 +97,7 @@ describe("temporal scratch", () => {
 
   test("scratch add supports --on with past date", () => {
     const raw = label("add-on");
-    const path = scratchPath(raw);
+    const path = scratchFilePath(raw);
     rmFile(path);
 
     withTempDir((dir) => {
@@ -125,7 +112,7 @@ describe("temporal scratch", () => {
   });
 
   test("scratch add supports default pad without --scratch", () => {
-    const path = scratchPath();
+    const path = scratchFilePath();
     rmFile(path);
 
     withTempDir((dir) => {
@@ -141,7 +128,7 @@ describe("temporal scratch", () => {
 
   test("scratch add fails when pad does not exist", () => {
     const raw = label("missing-add");
-    const path = scratchPath(raw);
+    const path = scratchFilePath(raw);
     rmFile(path);
 
     withTempDir((dir) => {
@@ -155,7 +142,7 @@ describe("temporal scratch", () => {
 
   test("scratch add rejects duplicate event names", () => {
     const raw = label("duplicate");
-    const path = scratchPath(raw);
+    const path = scratchFilePath(raw);
     rmFile(path);
 
     withTempDir((dir) => {
@@ -171,7 +158,7 @@ describe("temporal scratch", () => {
 
   test("scratch show prints current scratch pad", () => {
     const raw = label("show");
-    const path = scratchPath(raw);
+    const path = scratchFilePath(raw);
     rmFile(path);
 
     withTempDir((dir) => {
@@ -194,7 +181,7 @@ describe("temporal scratch", () => {
 
   test("scratch show supports empty pad", () => {
     const raw = label("show-empty");
-    const path = scratchPath(raw);
+    const path = scratchFilePath(raw);
     rmFile(path);
 
     withTempDir((dir) => {
@@ -212,7 +199,7 @@ describe("temporal scratch", () => {
 
   test("scratch show fails without existing pad", () => {
     const raw = label("missing-show");
-    const path = scratchPath(raw);
+    const path = scratchFilePath(raw);
     rmFile(path);
 
     withTempDir((dir) => {
@@ -226,7 +213,7 @@ describe("temporal scratch", () => {
 
   test("scratch clear removes scratch pad", () => {
     const raw = label("clear");
-    const path = scratchPath(raw);
+    const path = scratchFilePath(raw);
     rmFile(path);
 
     withTempDir((dir) => {
@@ -243,7 +230,7 @@ describe("temporal scratch", () => {
 
   test("scratch clear warns and exits zero when pad is missing", () => {
     const raw = label("clear-missing");
-    const path = scratchPath(raw);
+    const path = scratchFilePath(raw);
     rmFile(path);
 
     withTempDir((dir) => {
@@ -255,7 +242,7 @@ describe("temporal scratch", () => {
 
   test("scratch label sanitization is applied", () => {
     const raw = "My Email!!";
-    const path = scratchPath(raw);
+    const path = scratchFilePath(raw);
     rmFile(path);
 
     withTempDir((dir) => {
@@ -287,7 +274,7 @@ describe("temporal scratch", () => {
 
   test("end-to-end labeled workflow", () => {
     const raw = label("workflow");
-    const path = scratchPath(raw);
+    const path = scratchFilePath(raw);
     rmFile(path);
 
     withTempDir((dir) => {
