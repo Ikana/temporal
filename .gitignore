@@ -36,3 +36,7 @@ report.[0-9]*.[0-9]*.[0-9]*.[0-9]*.json
 
 # editor
 .vscode/
+
+# local reference artifacts
+6604311.pdf
+specs/001-time-cli/references/
