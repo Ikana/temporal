@@ -6,6 +6,7 @@ import { nowCommand } from "./commands/now";
 import { pastCommand } from "./commands/past";
 import { refreshCommand } from "./commands/refresh";
 import { removeCommand } from "./commands/remove";
+import { scratchCommand } from "./commands/scratch";
 import { seqCommand } from "./commands/seq";
 import { showCommand } from "./commands/show";
 import { spanCommand } from "./commands/span";
@@ -22,6 +23,7 @@ const commands: Record<string, CommandFn> = {
   past: () => pastCommand(),
   ahead: () => aheadCommand(),
   remove: removeCommand,
+  scratch: scratchCommand,
   seq: seqCommand,
   span: spanCommand,
 };

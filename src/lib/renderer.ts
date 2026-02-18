@@ -5,6 +5,7 @@ type RenderView = "full" | "past" | "ahead";
 
 interface RenderOptions {
   view?: RenderView;
+  includeMetaSections?: boolean;
 }
 
 function escapeCell(value: string): string {
@@ -67,6 +68,7 @@ function sequenceWithNow(sequence: Sequence, context: TimeContext): string {
 
 export function renderTimeContext(context: TimeContext, options: RenderOptions = {}): string {
   const view = options.view ?? "full";
+  const includeMetaSections = options.includeMetaSections ?? true;
   const lines: string[] = ["# Time Context", "", ...renderNowSection(context), "", "## Timeline", ""];
 
   if (view === "full" || view === "past") {
@@ -77,7 +79,7 @@ export function renderTimeContext(context: TimeContext, options: RenderOptions =
     lines.push("### Ahead (Future)", "", ...renderEventTable(sortTimelineEvents(context.aheadEvents)), "");
   }
 
-  if (view === "full") {
+  if (view === "full" && includeMetaSections) {
     lines.push("## Sequences", "");
     for (const sequence of context.sequences) {
       lines.push(`### ${sequence.name}`);
