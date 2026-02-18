@@ -1,0 +1,10 @@
+node_modules/
+specs/
+tests/
+.git/
+.gitignore
+.claude/
+.codex/
+.specify/
+*.log
+.DS_Store
