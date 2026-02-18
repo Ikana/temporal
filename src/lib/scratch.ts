@@ -11,7 +11,7 @@ export function sanitizeLabel(input: string): string {
     .replace(/^-|-$/g, "");
 
   if (!sanitized) {
-    fail(`Error: Label "${input}" contains no valid characters.`);
+    fail(`Error: Label '${input}' contains no valid characters.`);
   }
 
   return sanitized;

@@ -116,8 +116,8 @@ The `init` command still proceeds normally after the warning.
 |-----------|---------------|------|
 | No scratch pad at target path (add/show) | `Error: No scratch pad found. Run 'temporal scratch' first.` | 1 |
 | No scratch pad at target path (clear) | `Warning: No scratch pad found at <path>. Nothing to clear.` | 0 |
-| Duplicate event name | `Error: Event "<name>" already exists in the scratch pad.` | 1 |
-| Label sanitizes to empty | `Error: Label "<input>" contains no valid characters.` | 1 |
+| Duplicate event name | `Error: Event '<name>' already exists in the scratch pad.` | 1 |
+| Label sanitizes to empty | `Error: Label '<input>' contains no valid characters.` | 1 |
 | `/tmp/` not writable | `Error: Cannot write to /tmp/. Check directory permissions.` | 1 |
 | Missing date specifier | `Error: Exactly one of --in, --on, or --at is required.` | 1 |
 | Unparseable date/duration | `Error: Cannot parse "<value>". Expected a date, duration, or ISO datetime.` | 1 |
