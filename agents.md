@@ -2,11 +2,11 @@
 
 ## Problem
 
-LLMs are bad at time. They lack persistent temporal context — no sense of "now," no feel for duration, and no spatial scaffold for ordering events. Humans solve temporal reasoning by mapping time onto space (Gentner, 2003). LLMs need the same scaffold made explicit.
+LLMs are bad at time. They lack persistent temporal context — no sense of "now," no feel for duration, and no spatial scaffold for ordering events. Humans solve temporal reasoning by mapping time onto space (Gentner, 2001). LLMs need the same scaffold made explicit.
 
 ## Theoretical Foundation
 
-Based on Dedre Gentner's "Spatial Metaphors in Temporal Reasoning" (MIT Press, 2003), humans use two coherent spatial systems to reason about time:
+Based on Dedre Gentner's "Spatial Metaphors in Temporal Reasoning" (MIT Press, 2001), humans use two coherent spatial systems to reason about time:
 
 ### Ego-Moving Metaphor
 The observer moves forward along a timeline toward the future. Future is "ahead," past is "behind." This is a two-point relation (observer ↔ event) and is cognitively easier to process.
