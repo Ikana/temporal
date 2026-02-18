@@ -77,6 +77,14 @@ function scratchClear(args: string[]): void {
 
 export function scratchCommand(args: string[]): void {
   const mode = args[0];
+  if (mode === "create") {
+    const label = args[1];
+    if (args.length > 2) {
+      commandError("Error: Usage: temporal scratch create [label]");
+    }
+    scratchCreate(label);
+    return;
+  }
   if (mode === "add") {
     scratchAdd(args.slice(1));
     return;

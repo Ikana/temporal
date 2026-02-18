@@ -89,6 +89,7 @@ The agent has finished drafting and no longer needs the scratch pad. It runs `te
 
 - **FR-001**: CLI MUST provide a `temporal scratch [label]` command that creates an ephemeral scratch file in `/tmp/` with a NOW section containing timestamp, weekday, week number, quarter, and timezone.
 - **FR-002**: CLI MUST create scratch files at `/tmp/time-scratch.md` (no label) or `/tmp/time-scratch-<label>.md` (with label), never in the project directory.
+- **FR-002a**: Scratch file reads and writes MUST fail safely if the target path is a symlink (never follow symlinks).
 - **FR-003**: CLI MUST provide a `temporal scratch add <event>` command with `--in`, `--on`, and `--at` options, identical in syntax to `temporal add`. Accepts `--scratch <label>` to target a labeled pad.
 - **FR-004**: CLI MUST provide a `temporal scratch show` command that prints the scratch pad to stdout in the ego-moving spatial format. Accepts `--scratch <label>` to target a labeled pad.
 - **FR-005**: CLI MUST provide a `temporal scratch clear` command that deletes the scratch file from `/tmp/`. Accepts `--scratch <label>` to target a labeled pad.
@@ -103,6 +104,7 @@ The agent has finished drafting and no longer needs the scratch pad. It runs `te
 - **FR-014**: When no scratch pad exists, `scratch add` and `scratch show` MUST exit with a helpful error suggesting `temporal scratch` first. `scratch clear` MUST warn but exit 0.
 - **FR-015**: The `scratch add`, `scratch show`, and `scratch clear` subcommands MUST accept an optional `--scratch <label>` flag. When provided, the command targets `/tmp/time-scratch-<label>.md`. When omitted, it targets the default `/tmp/time-scratch.md`.
 - **FR-016**: `temporal init` MUST warn on stderr if scratch pad files (`time-scratch*.md`) exist in the current working directory, advising the user to use `temporal scratch` for ephemeral use instead. The `init` command still proceeds (creating `time.md`) but the warning prevents accidental confusion between persistent and ephemeral modes.
+- **FR-017**: CLI MUST provide `temporal scratch create [label]` as an explicit create alias so labels that collide with reserved subcommand names (`add`, `show`, `clear`) can still be created unambiguously.
 
 ### Key Entities
 

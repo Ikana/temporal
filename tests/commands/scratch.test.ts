@@ -1,5 +1,5 @@
 import { describe, expect, test } from "bun:test";
-import { existsSync, readFileSync, rmSync, writeFileSync } from "node:fs";
+import { existsSync, readFileSync, rmSync, symlinkSync, writeFileSync } from "node:fs";
 import { scratchFilePath } from "../../src/lib/scratch";
 import { runCli, withTempDir } from "../helpers/cli";
 
@@ -37,6 +37,19 @@ describe("temporal scratch", () => {
       expect(result.status).toBe(0);
       expect(existsSync(path)).toBe(true);
       expect(readFileSync(path, "utf8")).toContain("## Now");
+    });
+
+    rmFile(path);
+  });
+
+  test("scratch create subcommand allows reserved labels", () => {
+    const path = scratchFilePath("add");
+    rmFile(path);
+
+    withTempDir((dir) => {
+      const result = runCli(["scratch", "create", "add"], dir);
+      expect(result.status).toBe(0);
+      expect(existsSync(path)).toBe(true);
     });
 
     rmFile(path);
@@ -260,6 +273,24 @@ describe("temporal scratch", () => {
       expect(result.status).toBe(1);
       expect(result.stderr).toContain("contains no valid characters");
     });
+  });
+
+  test("scratch refuses symlink targets in /tmp", () => {
+    const path = scratchFilePath();
+    rmFile(path);
+
+    withTempDir((dir) => {
+      const victim = `${dir}/victim.txt`;
+      writeFileSync(victim, "safe-content", "utf8");
+      symlinkSync(victim, path);
+
+      const result = runCli(["scratch"], dir);
+      expect(result.status).toBe(1);
+      expect(result.stderr).toContain("Refusing to follow symlink");
+      expect(readFileSync(victim, "utf8")).toBe("safe-content");
+    });
+
+    rmFile(path);
   });
 
   test("init warns when scratch files exist in cwd", () => {

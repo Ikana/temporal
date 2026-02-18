@@ -27,6 +27,16 @@ temporal scratch [label]
 
 ---
 
+### `temporal scratch create [label]`
+
+Explicit create alias for `temporal scratch [label]`. Useful when the intended label collides with a reserved subcommand name (`add`, `show`, `clear`).
+
+```
+temporal scratch create [label]
+```
+
+---
+
 ### `temporal scratch add <event>`
 
 Add an event to the scratch pad. Exactly one of `--in`, `--on`, or `--at` is required.
@@ -105,6 +115,7 @@ The `init` command still proceeds normally after the warning.
 ## Global Behavior
 
 - All scratch commands that read or write scratch pad files target `/tmp/time-scratch.md` (default) or `/tmp/time-scratch-<label>.md` (when `--scratch <label>` is provided).
+- Scratch file reads/writes MUST fail safely if the target path is a symlink (never follow symlinks).
 - If the target scratch pad does not exist and the command is not `scratch` (create) or `scratch clear`, exit 1 with stderr message: `Error: No scratch pad found. Run 'temporal scratch' first.`
 - All error messages go to stderr. All markdown output goes to stdout.
 - No interactive prompts under any circumstances.
@@ -118,6 +129,7 @@ The `init` command still proceeds normally after the warning.
 | No scratch pad at target path (clear) | `Warning: No scratch pad found at <path>. Nothing to clear.` | 0 |
 | Duplicate event name | `Error: Event '<name>' already exists in the scratch pad.` | 1 |
 | Label sanitizes to empty | `Error: Label '<input>' contains no valid characters.` | 1 |
+| Scratch path is a symlink | `Error: Refusing to follow symlink at '<path>'.` | 1 |
 | `/tmp/` not writable | `Error: Cannot write to /tmp/. Check directory permissions.` | 1 |
 | Missing date specifier | `Error: Exactly one of --in, --on, or --at is required.` | 1 |
 | Unparseable date/duration | `Error: Cannot parse "<value>". Expected a date, duration, or ISO datetime.` | 1 |
