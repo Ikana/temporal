@@ -1,5 +1,6 @@
 export const TIME_FILE = "time.md";
 export const MISSING_TIME_FILE_ERROR = "Error: time.md not found. Run 'temporal init' first.";
+export const MISSING_SCRATCH_FILE_ERROR = "Error: No scratch pad found. Run 'temporal scratch' first.";
 
 export class CliError extends Error {
   constructor(message: string) {

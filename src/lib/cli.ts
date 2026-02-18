@@ -14,6 +14,10 @@ Commands:
   remove <event>
   seq <name> <event1> <event2> [event3...]
   span <name> --from <when> --to <when>
+  scratch [label]
+  scratch add <event> (--in <duration> | --on <date> | --at <datetime>) [--scratch <label>]
+  scratch show [--scratch <label>]
+  scratch clear [--scratch <label>]
 `;
 
 export function commandError(message: string): never {
