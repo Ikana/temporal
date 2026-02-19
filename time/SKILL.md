@@ -20,6 +20,14 @@ Use one frame only: you move forward through time.
 ## Prerequisites
 
 - `temporal` must be on your `$PATH`.
+- Install (macOS Apple Silicon):
+  `curl -L https://github.com/Ikana/temporal/releases/latest/download/temporal-darwin-arm64 -o /usr/local/bin/temporal && chmod +x /usr/local/bin/temporal`
+- Install (macOS Intel):
+  `curl -L https://github.com/Ikana/temporal/releases/latest/download/temporal-darwin-x64 -o /usr/local/bin/temporal && chmod +x /usr/local/bin/temporal`
+- Install (Linux x64):
+  `curl -L https://github.com/Ikana/temporal/releases/latest/download/temporal-linux-x64 -o /usr/local/bin/temporal && chmod +x /usr/local/bin/temporal`
+- Install (Linux ARM64):
+  `curl -L https://github.com/Ikana/temporal/releases/latest/download/temporal-linux-arm64 -o /usr/local/bin/temporal && chmod +x /usr/local/bin/temporal`
 - Install/build instructions: [github.com/Ikana/temporal](https://github.com/Ikana/temporal)
 
 ## Quick Start
