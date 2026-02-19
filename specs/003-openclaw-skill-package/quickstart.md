@@ -5,7 +5,7 @@
 ## What gets built
 
 1. **`time/SKILL.md`** — The OpenClaw skill document (under 200 lines)
-2. **`scripts/build-release.sh`** — Cross-compiles and zips temporal for 5 platforms
+2. **`scripts/build-release.sh`** — Cross-compiles temporal for 4 platforms and generates checksums
 
 ## How to build release artifacts
 
@@ -14,11 +14,11 @@
 bash scripts/build-release.sh
 
 # Output in dist/:
-#   temporal-darwin-arm64.zip
-#   temporal-darwin-x64.zip
-#   temporal-linux-x64.zip
-#   temporal-linux-arm64.zip
-#   temporal-windows-x64.zip
+#   temporal-darwin-arm64
+#   temporal-darwin-x64
+#   temporal-linux-x64
+#   temporal-linux-arm64
+#   temporal-checksums.txt
 ```
 
 ## How to validate SKILL.md
@@ -33,4 +33,4 @@ head -15 time/SKILL.md
 
 ## How to publish to ClawHub
 
-Upload `time/SKILL.md` to ClawHub under slug `time`. Upload zip artifacts to GitHub Releases at github.com/Ikana/temporal.
+Upload `time/SKILL.md` to ClawHub under slug `time`. Push a version tag (for example `v0.1.0`) to trigger the GitHub Actions release workflow that publishes binaries/checksums to github.com/Ikana/temporal.

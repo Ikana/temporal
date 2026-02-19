@@ -20,14 +20,17 @@ Use one frame only: you move forward through time.
 ## Prerequisites
 
 - `temporal` must be on your `$PATH`.
+- Ensure `~/.local/bin` is on your `$PATH` (for example, `export PATH="$HOME/.local/bin:$PATH"` in your shell profile).
 - Install (macOS Apple Silicon):
-  `curl -L https://github.com/Ikana/temporal/releases/latest/download/temporal-darwin-arm64 -o /usr/local/bin/temporal && chmod +x /usr/local/bin/temporal`
+  `mkdir -p ~/.local/bin && curl -L https://github.com/Ikana/temporal/releases/latest/download/temporal-darwin-arm64 -o ~/.local/bin/temporal && chmod +x ~/.local/bin/temporal`
 - Install (macOS Intel):
-  `curl -L https://github.com/Ikana/temporal/releases/latest/download/temporal-darwin-x64 -o /usr/local/bin/temporal && chmod +x /usr/local/bin/temporal`
+  `mkdir -p ~/.local/bin && curl -L https://github.com/Ikana/temporal/releases/latest/download/temporal-darwin-x64 -o ~/.local/bin/temporal && chmod +x ~/.local/bin/temporal`
 - Install (Linux x64):
-  `curl -L https://github.com/Ikana/temporal/releases/latest/download/temporal-linux-x64 -o /usr/local/bin/temporal && chmod +x /usr/local/bin/temporal`
+  `mkdir -p ~/.local/bin && curl -L https://github.com/Ikana/temporal/releases/latest/download/temporal-linux-x64 -o ~/.local/bin/temporal && chmod +x ~/.local/bin/temporal`
 - Install (Linux ARM64):
-  `curl -L https://github.com/Ikana/temporal/releases/latest/download/temporal-linux-arm64 -o /usr/local/bin/temporal && chmod +x /usr/local/bin/temporal`
+  `mkdir -p ~/.local/bin && curl -L https://github.com/Ikana/temporal/releases/latest/download/temporal-linux-arm64 -o ~/.local/bin/temporal && chmod +x ~/.local/bin/temporal`
+- Verify checksums before install (recommended; pin a tag instead of `latest` for reproducible installs):
+  `VERSION=v0.1.0 && FILE=temporal-linux-x64 && curl -L https://github.com/Ikana/temporal/releases/download/$VERSION/$FILE -o /tmp/$FILE && curl -L https://github.com/Ikana/temporal/releases/download/$VERSION/temporal-checksums.txt -o /tmp/temporal-checksums.txt && grep " $FILE$" /tmp/temporal-checksums.txt | sha256sum -c -`
 - Install/build instructions: [github.com/Ikana/temporal](https://github.com/Ikana/temporal)
 
 ## Quick Start

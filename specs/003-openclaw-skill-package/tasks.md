@@ -3,7 +3,7 @@
 **Input**: Design documents from `/specs/003-openclaw-skill-package/`
 **Prerequisites**: plan.md (required), spec.md (required for user stories), research.md, quickstart.md
 
-**Tests**: No test tasks — not requested in the feature specification. Validation is manual (line count, build output).
+**Tests**: Release workflow must run `bun test` before publishing artifacts. Other validation is manual (line count, docs checks).
 
 **Organization**: Tasks are grouped by user story to enable independent implementation and testing of each story.
 
@@ -83,14 +83,14 @@
 
 ---
 
-## Phase 6: Build Script (Cross-Cutting)
+## Phase 6: Release Automation (Cross-Cutting)
 
-**Purpose**: Cross-compile temporal for 5 platforms and package as zips for GitHub Releases
+**Purpose**: Publish release binaries/checksums from CI and keep local helper script aligned
 
-- [X] T012 Write `scripts/build-release.sh` — clean and recreate `dist/`, loop over 5 bun targets (bun-darwin-arm64, bun-darwin-x64, bun-linux-x64, bun-linux-arm64, bun-windows-x64), cross-compile with `bun build --compile --minify --target=<target> src/index.ts --outfile <binary>`, zip each binary into `dist/temporal-<os>-<arch>.zip`, report success/failure per target
-- [X] T013 Run `bash scripts/build-release.sh` and verify 5 zips are produced in `dist/` with correct names
+- [X] T012 Add `.github/workflows/release.yml` — trigger on `v*` tags, install Bun/dependencies, run `bun test`, build 4 bun targets (darwin-arm64, darwin-x64, linux-x64, linux-arm64), generate `dist/temporal-checksums.txt`, create release with all assets
+- [X] T013 Align `scripts/build-release.sh` to mirror CI output (same 4 binaries + checksum file in `dist/`)
 
-**Checkpoint**: `dist/` contains temporal-darwin-arm64.zip, temporal-darwin-x64.zip, temporal-linux-x64.zip, temporal-linux-arm64.zip, temporal-windows-x64.zip.
+**Checkpoint**: `dist/` contains temporal-darwin-arm64, temporal-darwin-x64, temporal-linux-x64, temporal-linux-arm64, temporal-checksums.txt.
 
 ---
 

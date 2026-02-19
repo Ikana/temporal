@@ -32,4 +32,8 @@ TypeScript on Bun 1.x: Follow standard conventions
 - 001-time-cli: Added TypeScript on Bun 1.x + None (zero external dependencies)
 
 <!-- MANUAL ADDITIONS START -->
+### Error message conventions
+
+- When including user-provided values in error messages, wrap those values in single quotes to keep formatting consistent across commands.
+  - Example: `Unknown label 'foo'` (not `Unknown label "foo"`).
 <!-- MANUAL ADDITIONS END -->

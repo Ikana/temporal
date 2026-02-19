@@ -4,21 +4,20 @@
 
 ## R1: Bun Cross-Compilation for Release Binaries
 
-**Decision**: Use `bun build --compile --target=<target> --minify` to cross-compile from macOS to all 5 target platforms.
+**Decision**: Use `bun build --compile --target=<target> --minify` in GitHub Actions (`ubuntu-latest`) to build 4 release binaries.
 
-**Rationale**: Bun natively supports cross-compilation from any host to any target. No external toolchain or CI matrix needed. A single macOS machine can produce all release artifacts.
+**Rationale**: Bun supports cross-compilation from Linux for the required darwin/linux targets. One Ubuntu runner produces all release artifacts with a single workflow.
 
 **Targets**:
 - `bun-darwin-arm64` — macOS Apple Silicon
 - `bun-darwin-x64` — macOS Intel
 - `bun-linux-x64` — Linux x86_64 (glibc)
 - `bun-linux-arm64` — Linux ARM64 (glibc)
-- `bun-windows-x64` — Windows x86_64
 
 **Alternatives considered**:
-- GitHub Actions CI matrix: More complex, requires CI setup, not needed for a simple binary. Can be added later.
-- Docker-based cross-compilation: Unnecessary since bun handles cross-compilation natively.
-- musl targets (linux-x64-musl, linux-arm64-musl): Excluded for simplicity; glibc targets cover the vast majority of users. Can add later if requested.
+- `macos-latest` runner: Not necessary for the current target set and generally slower/more expensive than Ubuntu runners.
+- GitHub Actions matrix builds: More complex than needed for a small target set.
+- musl targets (linux-x64-musl, linux-arm64-musl): Excluded for simplicity; glibc targets cover the majority of users.
 
 ## R2: OpenClaw SKILL.md Conventions
 
@@ -28,15 +27,15 @@
 
 **Alternatives considered**: None — the user defined the convention.
 
-## R3: Zip Packaging Format
+## R3: Release Artifact Format
 
-**Decision**: Each zip contains only the binary (`temporal` or `temporal.exe`). No README, no LICENSE, no wrapper scripts.
+**Decision**: Publish raw binaries as release assets plus a `temporal-checksums.txt` file for verification.
 
-**Rationale**: Constitution principle V (Simplicity & Minimalism) — single binary distribution. The SKILL.md on ClawHub teaches agents how to use it. Users downloading from GitHub Releases get the binary and nothing else.
+**Rationale**: This matches direct-install commands in SKILL.md (`curl .../download/<binary>`), avoids archive extraction steps, and enables integrity verification.
 
 **Alternatives considered**:
-- Tarball (.tar.gz): More Unix-native but zip is universal across all 3 OS targets.
-- Include a README in the zip: Unnecessary — the binary is self-contained and SKILL.md is the documentation.
+- Zip/tar packaging: Adds extraction steps and mismatches the direct download install flow.
+- Signature-based verification: Deferred; checksums are simpler to ship immediately.
 
 ## R4: Ego-Moving Metaphor Documentation
 

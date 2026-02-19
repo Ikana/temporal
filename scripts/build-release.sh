@@ -1,51 +1,24 @@
 #!/usr/bin/env bash
-set -u
+set -euo pipefail
 
 ROOT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
 DIST_DIR="$ROOT_DIR/dist"
-TMP_DIR="$ROOT_DIR/.build-release-tmp"
 
-rm -rf "$DIST_DIR" "$TMP_DIR"
-mkdir -p "$DIST_DIR" "$TMP_DIR"
+rm -rf "$DIST_DIR"
+mkdir -p "$DIST_DIR"
 
 TARGETS=(
-  "bun-darwin-arm64|darwin-arm64|temporal"
-  "bun-darwin-x64|darwin-x64|temporal"
-  "bun-linux-x64|linux-x64|temporal"
-  "bun-linux-arm64|linux-arm64|temporal"
-  "bun-windows-x64|windows-x64|temporal.exe"
+  "bun-darwin-arm64|temporal-darwin-arm64"
+  "bun-darwin-x64|temporal-darwin-x64"
+  "bun-linux-x64|temporal-linux-x64"
+  "bun-linux-arm64|temporal-linux-arm64"
 )
 
-failures=0
-
 for entry in "${TARGETS[@]}"; do
-  IFS='|' read -r target label binary <<< "$entry"
-  out_dir="$TMP_DIR/$label"
-  out_bin="$out_dir/$binary"
-  out_zip="$DIST_DIR/temporal-$label.zip"
-
-  mkdir -p "$out_dir"
-  printf '[%s] Building...\n' "$target"
-
-  if bun build --compile --minify --target="$target" "$ROOT_DIR/src/index.ts" --outfile "$out_bin"; then
-    if (cd "$out_dir" && zip -q "$out_zip" "$binary"); then
-      printf '[%s] OK -> %s\n' "$target" "$out_zip"
-    else
-      printf '[%s] FAIL (zip)\n' "$target" >&2
-      failures=$((failures + 1))
-    fi
-  else
-    printf '[%s] FAIL (build)\n' "$target" >&2
-    failures=$((failures + 1))
-  fi
-
+  IFS='|' read -r target outfile <<< "$entry"
+  printf '[%s] Building %s...\n' "$target" "$outfile"
+  bun build --compile --minify --target="$target" "$ROOT_DIR/src/index.ts" --outfile "$DIST_DIR/$outfile"
 done
 
-rm -rf "$TMP_DIR"
-
-if [ "$failures" -gt 0 ]; then
-  printf 'Build completed with %d failure(s).\n' "$failures" >&2
-  exit 1
-fi
-
+sha256sum "$DIST_DIR"/temporal-* > "$DIST_DIR/temporal-checksums.txt"
 printf 'Build completed successfully. Artifacts in %s\n' "$DIST_DIR"
