@@ -3,6 +3,7 @@ name: time
 slug: time
 description: LLM temporal reasoning scaffold for the temporal CLI.
 when_to_use: Use when a task involves dates, deadlines, scheduling, or relative time reasoning.
+metadata: {"openclaw":{"requires":{"bins":["temporal"]}}}
 ---
 
 # time
