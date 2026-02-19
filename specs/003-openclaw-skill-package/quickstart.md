@@ -33,4 +33,12 @@ head -15 time/SKILL.md
 
 ## How to publish to ClawHub
 
-Upload `time/SKILL.md` to ClawHub under slug `time`. Push a version tag (for example `v0.1.0`) to trigger the GitHub Actions release workflow that publishes binaries/checksums to github.com/Ikana/temporal.
+Publish the skill folder directly:
+
+```sh
+npx clawhub publish /Users/roderik/time/time --version 0.1.0
+```
+
+Important: `--version` must be valid semver with no `v` prefix (use `0.1.0`, not `v0.1.0`).
+
+Then push a Git tag (for example `v0.1.0`) to trigger the GitHub Actions release workflow that publishes binaries/checksums to github.com/Ikana/temporal.
