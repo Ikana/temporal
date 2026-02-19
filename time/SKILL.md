@@ -26,6 +26,7 @@ Use one frame only: you move forward through time.
 - Installer defaults to `v0.1.0`. You can override version/install dir with `TEMPORAL_VERSION` and `TEMPORAL_INSTALL_DIR`.
 - For versions without a bundled checksum, set `TEMPORAL_SHA256` to an independently obtained digest.
 - Ensure `~/.local/bin` is on your `$PATH` (for example, `export PATH="$HOME/.local/bin:$PATH"` in your shell profile).
+- Note: The OS-specific `curl` examples below install binaries without checksum verification; prefer `scripts/install.sh` when possible.
 - Install (macOS Apple Silicon):
   `mkdir -p ~/.local/bin && curl -L https://github.com/Ikana/temporal/releases/latest/download/temporal-darwin-arm64 -o ~/.local/bin/temporal && chmod +x ~/.local/bin/temporal`
 - Install (macOS Intel):

@@ -32,11 +32,14 @@ FILE="temporal-${OS}-${ARCH}"
 
 resolve_latest_version() {
   local tag
-  tag="$(
+  if ! tag="$(
     curl -fsSL "https://api.github.com/repos/${REPO}/releases/latest" \
       | sed -n 's/.*"tag_name":[[:space:]]*"\([^"]*\)".*/\1/p' \
       | head -n1
-  )"
+  )"; then
+    echo "Failed to resolve latest release tag for ${REPO}: unable to query GitHub API (network issue or API rate limiting)." >&2
+    exit 1
+  fi
   if [ -z "$tag" ]; then
     echo "Failed to resolve latest release tag for ${REPO}" >&2
     exit 1
