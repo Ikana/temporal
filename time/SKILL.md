@@ -21,6 +21,8 @@ Use one frame only: you move forward through time.
 ## Prerequisites
 
 - `temporal` must be on your `$PATH`.
+- If `temporal` is not on `$PATH`, run `scripts/install.sh` from the skill directory.
+- `scripts/install.sh` auto-detects OS/arch and installs `temporal` to `/usr/local/bin/temporal`.
 - Ensure `~/.local/bin` is on your `$PATH` (for example, `export PATH="$HOME/.local/bin:$PATH"` in your shell profile).
 - Install (macOS Apple Silicon):
   `mkdir -p ~/.local/bin && curl -L https://github.com/Ikana/temporal/releases/latest/download/temporal-darwin-arm64 -o ~/.local/bin/temporal && chmod +x ~/.local/bin/temporal`
